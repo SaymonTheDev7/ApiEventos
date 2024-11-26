@@ -30,12 +30,12 @@ public class EventoController {
         eventoService.atualizarDataEvento(id, data);
     }
 
-    @DeleteMapping("/Delete")
+    @DeleteMapping("/{id}")
     public void deletarEvento(@PathVariable Integer id) {
         eventoService.deletarEvento(id);
     }
 
-    @GetMapping("/GetId")
+    @GetMapping("/{id}")
     public void buscarEvento(@PathVariable Integer id) {
         eventoService.buscarEvento(id);
     }
