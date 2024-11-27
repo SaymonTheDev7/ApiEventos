@@ -1,13 +1,13 @@
 package net.weg.ApiEventos.Controller;
-
-import net.weg.ApiEventos.Model.Evento;
 import net.weg.ApiEventos.Model.Participante;
-import net.weg.ApiEventos.Service.EventoService;
 import net.weg.ApiEventos.Service.ParticipanteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("API/Participante")
@@ -17,32 +17,49 @@ public class ParticipanteController {
     ParticipanteService participanteService;
 
     @PostMapping("/Post")
-    public void salvarParticipante(@RequestBody Participante participante) {
-        participanteService.salvarParticipante(participante);
+    public ResponseEntity<Participante> salvarParticipante(@RequestBody Participante participante) {
+        participante = participanteService.salvarParticipante(participante);
+        return new  ResponseEntity<>(participante, HttpStatus.CREATED);
     }
 
     @PutMapping("/Put")
-    public void atualizarParticipante(@RequestBody Participante participante) {
-        participanteService.atualizarParticipante(participante);
+    public ResponseEntity<Participante> atualizarParticipante(@RequestBody Participante participante) {
+        participante = participanteService.atualizarParticipante(participante);
+        return new ResponseEntity<>(participante, HttpStatus.OK);
     }
 
     @PatchMapping("/Patch")
-    public void atualizarParticipante (@RequestParam Integer id, @RequestParam String email) {
-        participanteService.atualizarEmailParticipante(id, email);
+    public ResponseEntity<Participante> atualizarParticipante (@RequestParam Integer id, @RequestParam String email) {
+        try {
+            Participante participante = participanteService.atualizarEmailParticipante(id, email);
+            return new ResponseEntity<>(participante, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deletarParticipante(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletarParticipante(@PathVariable Integer id) {
         participanteService.deletarParticpante(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Participante buscarParticipante(@PathVariable Integer id) {
-        return participanteService.buscarParticipante(id);
+    public ResponseEntity<Participante> buscarParticipante(@PathVariable Integer id) {
+         try {
+             Participante participante = participanteService.buscarParticipante(id);
+             return new ResponseEntity<>(participante, HttpStatus.OK);
+         } catch (NoSuchElementException e) {
+             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+         }
     }
 
     @GetMapping("/GetAll")
-    public List<Participante> buscarParticipantes() {
-        return participanteService.buscarParticipantes();
+    public ResponseEntity<List<Participante>> buscarParticipantes() {
+        List<Participante> participantes = participanteService.buscarParticipantes();
+        if (!participantes.isEmpty()) {
+            return new ResponseEntity<>(participantes, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

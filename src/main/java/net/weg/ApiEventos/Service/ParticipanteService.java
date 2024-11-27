@@ -17,19 +17,18 @@ public class ParticipanteService {
     @Autowired
     ParticipanteRepository participanteRepository;
 
-    public void salvarParticipante(Participante participante) {
-        participanteRepository.save(participante);
+    public Participante salvarParticipante(Participante participante) {
+        return participanteRepository.save(participante);
     }
 
-    public void atualizarParticipante(Participante participante) {
-        participanteRepository.save(participante);
+    public Participante atualizarParticipante(Participante participante) {
+        return participanteRepository.save(participante);
     }
 
-    public void atualizarEmailParticipante(Integer id, String email) {
-        Optional<Participante> participanteOptional = participanteRepository.findById(id);
-        Participante participante = participanteOptional.get();
+    public Participante atualizarEmailParticipante(Integer id, String email) {
+        Participante participante = buscarParticipante(id);
         participante.setEmail(email);
-        participanteRepository.save(participante);
+        return participanteRepository.save(participante);
     }
 
     public void deletarParticpante(Integer id) {
