@@ -36,8 +36,8 @@ public class EventoController {
     }
 
     @GetMapping("/{id}")
-    public void buscarEvento(@PathVariable Integer id) {
-        eventoService.buscarEvento(id);
+    public Evento buscarEvento(@PathVariable Integer id) {
+        return eventoService.buscarEvento(id);
     }
 
     @GetMapping("/GetAll")

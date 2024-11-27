@@ -1,4 +1,6 @@
 package net.weg.ApiEventos.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +19,8 @@ public class Evento {
     private String data;
     private String descricao;
 
+    @JsonIgnore
+    @JsonBackReference
     @OneToMany (mappedBy = "evento")
     private List<Inscricao> inscricoes = new ArrayList<>();
 }
