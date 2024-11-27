@@ -1,5 +1,6 @@
 package net.weg.ApiEventos.Controller;
 
+import net.weg.ApiEventos.Controller.Dto.InscricaoRequestDTO;
 import net.weg.ApiEventos.Model.Evento;
 import net.weg.ApiEventos.Model.Inscricao;
 import net.weg.ApiEventos.Service.InscricaoService;
@@ -16,8 +17,8 @@ public class InscricaoController {
     InscricaoService inscricaoService;
 
     @PostMapping("/Post")
-    public void salvarInscricao(@RequestBody Inscricao inscricao) {
-        inscricaoService.salvarInscricao(inscricao);
+    public ResponseEntity<Inscricao> salvarInscricao(@RequestBody InscricaoRequestDTO dto) {
+       Inscricao inscricao = inscricaoService.salvarInscricao(dto);
     }
 
     @PutMapping("/Put")

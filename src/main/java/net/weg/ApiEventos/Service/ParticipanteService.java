@@ -1,9 +1,5 @@
 package net.weg.ApiEventos.Service;
-
-import jakarta.servlet.http.Part;
-import net.weg.ApiEventos.Model.Evento;
 import net.weg.ApiEventos.Model.Participante;
-import net.weg.ApiEventos.Repository.EventoRepository;
 import net.weg.ApiEventos.Repository.ParticipanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
