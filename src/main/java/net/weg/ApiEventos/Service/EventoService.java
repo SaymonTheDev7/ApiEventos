@@ -17,23 +17,29 @@ public class EventoService {
     @Autowired
     EventoRepository eventoRepository;
 
-    public void salvarEvento(Evento evento) {
-        eventoRepository.save(evento);
+    public Evento salvarEvento(Evento evento) {
+        return eventoRepository.save(evento);
     }
 
-    public void atualizarEvento(Evento evento) {
-        eventoRepository.save(evento);
+    public Evento atualizarEvento(Evento evento) {
+        if (eventoRepository.findById(evento.getId()).isPresent()) {
+            evento.setId(evento.getId());
+            return eventoRepository.save(evento);
+        }
+        throw new RuntimeException();
     }
 
-    public void atualizarDataEvento(Integer id, String data) {
-        Optional<Evento> eventoOptional = eventoRepository.findById(id);
-        Evento evento = eventoOptional.get();
+    public Evento atualizarDataEvento(Integer id, String data) {
+        Evento evento = eventoRepository.findById(id).get();
         evento.setData(data);
-        eventoRepository.save(evento);
+        return eventoRepository.save(evento);
     }
 
     public void deletarEvento(Integer id) {
-        eventoRepository.deleteById(id);
+        if (eventoRepository.findById(id).isPresent()) {
+            eventoRepository.deleteById(id);
+        }
+        throw new RuntimeException();
     }
 
     public Evento buscarEvento(Integer id) {

@@ -17,7 +17,7 @@ public class InscricaoService {
     InscricaoRepository inscricaoRepository;
 
     @Autowired
-    EventoRepository eventoRepository;
+    EventoService eventoService;
 
     public Inscricao salvarInscricao(InscricaoRequestDTO dto) {
         Inscricao inscricao = dto.conversao();
@@ -33,7 +33,7 @@ public class InscricaoService {
     public Inscricao atualizarEvento(Integer eventoId, Integer id) {
         Inscricao inscricao = buscarInscricao(id);
         try {
-            Evento evento = eventoRepository.findById(eventoId).get();
+            Evento evento = eventoService.buscarEvento(eventoId);
             inscricao.setEvento(evento);
             return inscricaoRepository.save(inscricao);
         } catch (NoSuchElementException e) {
