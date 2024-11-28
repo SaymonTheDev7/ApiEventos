@@ -73,4 +73,22 @@ public class InscricaoController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/GetByParticipante/{id}")
+    public ResponseEntity<List<Inscricao>> buscarInscricoesByParticipante(@PathVariable Integer id) {
+        List<Inscricao> inscricoes = inscricaoService.buscarInscricoesParticipante(id);
+        if (inscricoes!=null) {
+            return new ResponseEntity<>(inscricoes, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/GetByEvento/{id}")
+    public ResponseEntity<List<Inscricao>> buscarInscricoesByEvento(@PathVariable Integer id) {
+        List<Inscricao> inscricoes = inscricaoService.buscarInscricoesEvento(id);
+        if (inscricoes!=null) {
+            return new ResponseEntity<>(inscricoes, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

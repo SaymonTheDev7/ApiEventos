@@ -4,6 +4,7 @@ import net.weg.ApiEventos.Repository.ParticipanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,9 @@ public class ParticipanteService {
 
     @Autowired
     ParticipanteRepository participanteRepository;
+
+    @Autowired
+    InscricaoService inscricaoService;
 
     public Participante salvarParticipante(Participante participante) {
         return participanteRepository.save(participante);
@@ -28,11 +32,20 @@ public class ParticipanteService {
     }
 
     public void deletarParticpante(Integer id) {
+        inscricaoService.deletarInscricaoParticipante(id);
         participanteRepository.deleteById(id);
     }
 
     public Participante buscarParticipante(Integer id) {
         Optional<Participante> participanteOptional = participanteRepository.findById(id);
+        if (participanteOptional.isPresent()) {
+            return participanteOptional.get();
+        }
+        throw new RuntimeException();
+    }
+
+    public Participante buscarParticipantePorEmail (String email) {
+        Optional<Participante> participanteOptional = participanteRepository.findByEmail(email);
         if (participanteOptional.isPresent()) {
             return participanteOptional.get();
         }

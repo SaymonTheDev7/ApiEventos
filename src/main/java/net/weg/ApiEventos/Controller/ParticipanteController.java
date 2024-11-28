@@ -62,4 +62,14 @@ public class ParticipanteController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
+    @GetMapping("/GetByEmail/{email}")
+    public ResponseEntity<Participante> buscarParticipantePorEmail(@RequestParam String email) {
+        try {
+            Participante participante = participanteService.buscarParticipantePorEmail(email);
+            return new ResponseEntity<>(participante, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
 }

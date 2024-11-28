@@ -59,4 +59,16 @@ public class InscricaoService {
     public List<Inscricao> buscarInscricoes() {
         return inscricaoRepository.findAll();
     }
+
+    public List<Inscricao>buscarInscricoesParticipante(Integer id) {
+        return inscricaoRepository.findAllByParticipanteId(id);
+    }
+
+    public List<Inscricao>buscarInscricoesEvento(Integer id) {
+        return inscricaoRepository.findAllByEventoId(id);
+    }
+
+    public void deletarInscricaoParticipante(Integer id) {
+         inscricaoRepository.deleteAllByParticipanteId(id);
+    }
 }
